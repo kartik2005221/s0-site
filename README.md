@@ -2,11 +2,12 @@
 
 # S0 — Official Featuring Website
 
-**Live Site:** [s0-home.pages.dev](https://s0-home.pages.dev/)
+**Live Site:** [s0-home.pages.dev](https://s0-home.pages.dev/)  
+**Original s0 Repository:** [github.com/kartik2005221/s0](https://github.com/kartik2005221/s0)
 
+[![GitHub Repository](https://img.shields.io/badge/GitHub-kartik2005221%2Fs0-181717.svg?logo=github&logoColor=white)](https://github.com/kartik2005221/s0)
 [![Cloudflare Pages](https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020.svg?logo=cloudflare&logoColor=white)](https://s0-home.pages.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/kartik2005221/s0/blob/main/LICENSE)
-[![Color Palette](https://img.shields.io/badge/Theme-ColorHunt_%23FF6500-FF6500.svg)](https://colorhunt.co/palette/ff65001e3e620b192c000000)
 
 </div>
 
@@ -18,25 +19,21 @@ This repository hosts the official featuring and landing website for **[s0 (Sect
 
 Built with pure static HTML5, CSS3, and JavaScript with zero external frameworks, designed to deploy directly on **Cloudflare Pages**.
 
+- **Core s0 Toolchain:** [https://github.com/kartik2005221/s0](https://github.com/kartik2005221/s0)
+- **Documentation Portal:** [https://s0-docs.gitbook.io/](https://s0-docs.gitbook.io/)
+- **Installation Portal:** [https://s0-install.pages.dev/](https://s0-install.pages.dev/)
+- **Zero-Trust Verification Portal:** [https://s0-verify.pages.dev/](https://s0-verify.pages.dev/)
+
 ## Key Sections & Features
 
-- **Hero & Mission Statement:** Unified tagline, compliance badges (NIST SP 800-88, IEEE 2883-2022, RFC 8785, RFC 8032), and quick one-line installer.
-- **Five Core Capabilities Grid:** Defensive Sanitization, Offensive Carving, Bit-Stream Imaging, Cryptographic Audit Ledger, and Zero-Trust Verification.
-- **Live Terminal Emulation (`js/terminal.js`):** Interactive simulated terminal showing real-time command typing and progress telemetry.
-- **Quick Installation Cards:** Interactive copyable commands for Linux, macOS, Windows PowerShell, Command Prompt, and bare-metal Live ISO.
-- **Comprehensive Comparison Matrix:** Deep feature breakdown of `s0` versus DBAN, Autopsy, Foremost, and dd/shred.
-- **Ecosystem Portals Quick Links:** Direct links to the Documentation Portal, Verification Portal, and Installation Portal.
+- **Hero & Mission Statement:** Clean, open layout with platform-aware one-line installer.
+- **Forensic Capabilities:** Defensive Sanitization, Offensive Evidence Carving, and Bit-Stream Acquisition.
+- **Side Capabilities:** Cryptographic Audit Ledger and Zero-Trust Client-Side Verification.
+- **Live Terminal Emulation (`js/terminal.js`):** Centered fixed-height terminal showcasing real installation, storage enumeration, sanitization, and verification outputs.
+- **Quick Installation Cards:** Expansive, un-truncated commands for Linux, macOS, Windows, and Bare-Metal Live ISO.
+- **Forensic Comparison Matrix:** Feature breakdown of `s0` versus DBAN, Autopsy, Foremost, and dd/shred.
 - **Dark & Light Mode:** Seamless theme toggle with local storage persistence and dynamic favicon switching.
 - **Dynamic Release Badge:** Live release version fetched asynchronously from GitHub Releases API with automated fallback.
-- **Mobile Responsive Drawer:** Clean slide-down hamburger navigation for mobile and tablet devices.
-
-## Color Scheme
-
-Adheres strictly to the designated palette:
-- **`#FF6500`** — Brand Forensic Orange (Primary Accent)
-- **`#1E3E62`** — Deep Navy Blue (Borders & Elevated Elements)
-- **`#0B192C`** — Midnight Canvas (Cards & Surfaces)
-- **`#000000`** — Pure Pitch Black (Base Canvas)
 
 ## Directory Structure
 
@@ -47,7 +44,7 @@ Adheres strictly to the designated palette:
 ├── css/
 │   └── home.css            # Custom responsive stylesheet & themes
 ├── js/
-│   ├── home.js             # Theme controller, copy utility & version fetcher
+│   ├── home.js             # Theme controller, copy utility & platform detector
 │   └── terminal.js         # Animated CLI showcase engine
 ├── fonts/                  # Self-hosted Rubik & JetBrains Mono WOFF2 fonts
 └── assets/
