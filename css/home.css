@@ -66,6 +66,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -142,6 +143,8 @@ header.site-header {
   font-weight: 700;
   font-size: 1.05rem;
   letter-spacing: -0.01em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .header-logo {
@@ -231,8 +234,10 @@ header.site-header {
 .container {
   max-width: 1040px;
   margin: 0 auto;
-  padding: 0 24px;
+  padding-left: 24px;
+  padding-right: 24px;
   width: 100%;
+  box-sizing: border-box;
 }
 
 /* Hero Section — Fullscreen, Grand & Animated */
@@ -599,7 +604,8 @@ header.site-header {
 
 /* Section Common */
 .section-spacer {
-  padding: 96px 0;
+  padding-top: 96px;
+  padding-bottom: 96px;
 }
 
 .section-header {
@@ -1047,22 +1053,116 @@ footer.site-footer {
 }
 
 @media (max-width: 768px) {
-  .hero {
-    padding: 50px 0 40px;
+  .site-header-inner {
+    padding: 0 16px;
+    gap: 8px;
   }
+
+  .site-header-right {
+    gap: 6px;
+  }
+
+  .site-logo-link {
+    font-size: 1rem;
+    gap: 8px;
+  }
+
+  .site-logo-link .logo-sub {
+    display: none;
+  }
+
+  .nav-btn {
+    padding: 6px 10px;
+  }
+
+  .github-repo-text {
+    display: none;
+  }
+
+  .nav-github {
+    padding: 6px 10px;
+  }
+
+  #themeToggleLabel {
+    display: none;
+  }
+
+  .theme-toggle-btn {
+    padding: 6px 10px;
+  }
+
+  .sys-pill {
+    padding: 5px 9px;
+    font-size: 0.72rem;
+    gap: 6px;
+  }
+
+  .container {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .section-spacer {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .hero {
+    padding: 40px 0 24px;
+  }
+
   .hero-actions {
     flex-direction: column;
     width: 100%;
   }
+
   .btn-cta {
     width: 100%;
     justify-content: center;
   }
+
   .footer-top {
     flex-direction: column;
   }
+
   .footer-links-group {
     width: 100%;
     justify-content: space-between;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header-inner {
+    padding: 0 12px;
+  }
+
+  .container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .feature-card {
+    padding: 22px 18px;
+  }
+
+  .install-item-card {
+    padding: 16px 14px;
+  }
+
+  .terminal-body {
+    padding: 14px 12px;
+    font-size: 0.74rem;
+    height: 380px;
+    max-height: 380px;
+  }
+
+  .code-box {
+    padding: 10px 12px;
+    font-size: 0.78rem;
+  }
+
+  .copy-btn {
+    padding: 5px 10px;
+    font-size: 0.72rem;
   }
 }
