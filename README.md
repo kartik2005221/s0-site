@@ -2,11 +2,11 @@
 
 # S0 — Official Featuring Website
 
-**Live Site:** [s0-home.pages.dev](https://s0-home.pages.dev/)  
+**Live Site:** [s0-site.pages.dev](https://s0-site.pages.dev/)  
 **Original s0 Repository:** [github.com/kartik2005221/s0](https://github.com/kartik2005221/s0)
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-kartik2005221%2Fs0-181717.svg?logo=github&logoColor=white)](https://github.com/kartik2005221/s0)
-[![Cloudflare Pages](https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020.svg?logo=cloudflare&logoColor=white)](https://s0-home.pages.dev/)
+[![Cloudflare Pages](https://img.shields.io/badge/Deployment-Cloudflare_Pages-F38020.svg?logo=cloudflare&logoColor=white)](https://s0-site.pages.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/kartik2005221/s0/blob/main/LICENSE)
 
 </div>
