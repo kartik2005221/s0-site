@@ -10,11 +10,11 @@ function updateFavicon(theme) {
     ? "assets/favicons/s0-light/favicon-32x32.png"
     : "assets/favicons/s0-dark/favicon-32x32.png";
   
-  let dynamicFavicon = document.getElementById("dynamic-favicon");
+  const dynamicFavicon = document.getElementById("dynamic-favicon");
   if (dynamicFavicon) {
     dynamicFavicon.href = iconPath;
   }
-  let headerLogo = document.getElementById("headerLogo");
+  const headerLogo = document.getElementById("headerLogo");
   if (headerLogo) {
     headerLogo.src = iconPath;
   }
@@ -27,10 +27,6 @@ function applyTheme(theme) {
   if (label) {
     label.textContent = theme === "light" ? "Dark" : "Light";
   }
-  const mobileLabel = document.getElementById("mobileThemeToggleLabel");
-  if (mobileLabel) {
-    mobileLabel.textContent = theme === "light" ? "Switch to Dark" : "Switch to Light";
-  }
   updateFavicon(theme);
 }
 
@@ -38,30 +34,6 @@ function toggleTheme() {
   const current = document.documentElement.getAttribute("data-theme") || "dark";
   const target = current === "dark" ? "light" : "dark";
   applyTheme(target);
-}
-
-// Mobile Navigation Drawer Toggle
-function toggleMobileMenu() {
-  const drawer = document.getElementById("mobileNavDrawer");
-  const toggleBtn = document.getElementById("mobileMenuToggle");
-  if (!drawer) return;
-  const isOpen = drawer.classList.contains("open");
-  if (isOpen) {
-    drawer.classList.remove("open");
-    toggleBtn.setAttribute("aria-expanded", "false");
-  } else {
-    drawer.classList.add("open");
-    toggleBtn.setAttribute("aria-expanded", "true");
-  }
-}
-
-function closeMobileMenu() {
-  const drawer = document.getElementById("mobileNavDrawer");
-  const toggleBtn = document.getElementById("mobileMenuToggle");
-  if (drawer && drawer.classList.contains("open")) {
-    drawer.classList.remove("open");
-    if (toggleBtn) toggleBtn.setAttribute("aria-expanded", "false");
-  }
 }
 
 // Clipboard Copy Utility
@@ -79,7 +51,6 @@ function copyText(elementId, btn) {
       btn.classList.remove("copied");
     }, 2000);
   }).catch(() => {
-    // Fallback if clipboard API is restricted
     const textArea = document.createElement("textarea");
     textArea.value = text.trim();
     document.body.appendChild(textArea);
@@ -95,6 +66,41 @@ function copyText(elementId, btn) {
   });
 }
 
+// Platform Detection and Switching for Hero Command
+const PLATFORM_COMMANDS = {
+  nix: "curl -fsSL https://s0-install.pages.dev/sh | bash",
+  win: "irm https://s0-install.pages.dev/ps1 | iex"
+};
+
+function setHeroPlatform(platform) {
+  const cmdSpan = document.getElementById("hero-quick-cmd");
+  const nixBtn = document.getElementById("heroPlatformNix");
+  const winBtn = document.getElementById("heroPlatformWin");
+
+  if (!cmdSpan) return;
+  cmdSpan.textContent = PLATFORM_COMMANDS[platform] || PLATFORM_COMMANDS.nix;
+
+  if (nixBtn && winBtn) {
+    if (platform === "win") {
+      winBtn.classList.add("active");
+      nixBtn.classList.remove("active");
+    } else {
+      nixBtn.classList.add("active");
+      winBtn.classList.remove("active");
+    }
+  }
+}
+
+function detectPlatform() {
+  const ua = navigator.userAgent || "";
+  const platform = navigator.platform || "";
+  if (/win/i.test(ua) || /win/i.test(platform)) {
+    setHeroPlatform("win");
+  } else {
+    setHeroPlatform("nix");
+  }
+}
+
 // Fetch Latest Release Version dynamically from GitHub API
 function fetchLatestReleaseVersion() {
   const versionTags = document.querySelectorAll(".s0-release-version");
@@ -102,7 +108,7 @@ function fetchLatestReleaseVersion() {
 
   fetch("https://api.github.com/repos/kartik2005221/s0/releases/latest")
     .then((res) => {
-      if (!res.ok) throw new Error("Network response error");
+      if (!res.ok) throw new Error("Network error");
       return res.json();
     })
     .then((data) => {
@@ -113,53 +119,41 @@ function fetchLatestReleaseVersion() {
       }
     })
     .catch(() => {
-      // Fallback stays v2.4.3
       versionTags.forEach((el) => {
         el.textContent = "v2.4.3";
       });
     });
 }
 
-// Platform Filter for Quick Install Cards
-function filterInstallPlatform(platform, clickedBtn) {
-  const cards = document.querySelectorAll(".install-card");
-  const tabBtns = document.querySelectorAll(".install-tab-btn");
+// Scroll Reveal Effect (IntersectionObserver)
+function initScrollReveal() {
+  const elements = document.querySelectorAll(".reveal-on-scroll");
+  if (!elements.length) return;
 
-  tabBtns.forEach(btn => btn.classList.remove("active"));
-  if (clickedBtn) clickedBtn.classList.add("active");
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: "0px 0px -40px 0px"
+    });
 
-  cards.forEach(card => {
-    const cardPlatform = card.getAttribute("data-platform");
-    if (platform === "all" || cardPlatform === platform) {
-      card.style.display = "flex";
-    } else {
-      card.style.display = "none";
-    }
-  });
+    elements.forEach(el => observer.observe(el));
+  } else {
+    elements.forEach(el => el.classList.add("revealed"));
+  }
 }
 
 // Initialization
 document.addEventListener("DOMContentLoaded", () => {
   const initialTheme = getPreferredTheme();
   applyTheme(initialTheme);
+  detectPlatform();
   fetchLatestReleaseVersion();
-
-  // Close mobile drawer on clicking any drawer link
-  const drawerLinks = document.querySelectorAll("#mobileNavDrawer a");
-  drawerLinks.forEach(link => {
-    link.addEventListener("click", () => {
-      closeMobileMenu();
-    });
-  });
-
-  // Close mobile drawer on clicking outside
-  document.addEventListener("click", (e) => {
-    const drawer = document.getElementById("mobileNavDrawer");
-    const toggleBtn = document.getElementById("mobileMenuToggle");
-    if (drawer && drawer.classList.contains("open")) {
-      if (!drawer.contains(e.target) && !toggleBtn.contains(e.target)) {
-        closeMobileMenu();
-      }
-    }
-  });
+  initScrollReveal();
 });
