@@ -34,7 +34,42 @@
       pauseAfter: 2200
     },
 
-    // 3. Defensive Media Sanitization / Erasing (NIST SP 800-88 Purge)
+    // 3. Offensive Evidence Carving / Deleted Artifact Recovery
+    {
+      command: "s0 carve --target /dev/sdb --out-dir /cases/evidence_01 --operator \"analyst-01\"",
+      postCommandDelay: 500,
+      outputs: [
+        { text: "==> S0 Module 2: Advanced Forensic Evidence Carving & Reconstruction", delay: 400, cls: "term-orange" },
+        { text: "Target Media   : /dev/sdb (32.0 GiB, unallocated file system sectors)", delay: 320 },
+        { text: "Carving Modes  : Inode allocation table + MFT runlist + Shannon entropy evaluation", delay: 350 },
+        {
+          type: "progress",
+          operation: "s0 carve",
+          unit: "GiB",
+          total: 32.0,
+          speedUnit: "MB/s",
+          extraField: "Found",
+          stages: [
+            { pct: 0,   val: " 0.0", speed: "  0", extra: " 0", eta: "--", delay: 350 },
+            { pct: 22,  val: " 7.0", speed: "142", extra: " 3", eta: "3s", delay: 650 },
+            { pct: 48,  val: "15.4", speed: "146", extra: " 7", eta: "2s", delay: 700 },
+            { pct: 74,  val: "23.6", speed: "149", extra: "11", eta: "1s", delay: 700 },
+            { pct: 92,  val: "29.4", speed: "147", extra: "14", eta: "1s", delay: 600 },
+            { pct: 100, val: "32.0", speed: "146", extra: "14", eta: "0s", delay: 550 }
+          ]
+        },
+        { text: "Bytes Scanned: 32.0 GiB | Total Files Recovered: 14", delay: 400, cls: "term-green" },
+        { text: "ID             EXT        SIZE    CONF  SHA256 (PREFIX)      FILENAME", delay: 300, cls: "term-dim" },
+        { text: "carve_01a9     pdf      428 KB     98%  a7f39b10c812d45e...  contract_signed.pdf", delay: 260, cls: "term-cyan" },
+        { text: "carve_02b4     png      1.8 MB     95%  51b4b4e7f4934b6b...  screen_capture.png", delay: 260, cls: "term-cyan" },
+        { text: "carve_03c8     docx      84 KB     91%  05dd581ce8e2041a...  financial_ledger.docx", delay: 260, cls: "term-cyan" },
+        { text: "[+] Recovery Manifest: carve_manifest_e21b8a90.json (Ed25519 Signed)", delay: 320, cls: "term-green" },
+        { text: "[+] Audit Ledger     : recorded block #1257 (SHA-256 Chained)", delay: 280, cls: "term-dim" }
+      ],
+      pauseAfter: 2400
+    },
+
+    // 4. Defensive Media Sanitization / Erasing (NIST SP 800-88 Purge)
     {
       command: "sudo s0 wipe --target /dev/sdb --yes --operator \"analyst-01\"",
       postCommandDelay: 550,
@@ -65,42 +100,7 @@
         { text: "[*] Verifying readback: 64 random LBA clusters sampled... 0 residual bits found.", delay: 450, cls: "term-green" },
         { text: "[+] Certificate Generated: drive_wipe_certificate_a7f39b10.json (+ PDF report)", delay: 350, cls: "term-green" },
         { text: "[+] Ed25519 Signature Verified: RFC 8032 Authentic", delay: 320, cls: "term-green" },
-        { text: "[+] Audit Ledger: anchored block #1257 (51b4b4e7f493...)", delay: 320, cls: "term-dim" }
-      ],
-      pauseAfter: 2400
-    },
-
-    // 4. Offensive Evidence Carving / Deleted Artifact Recovery
-    {
-      command: "s0 carve --target /dev/sdc --out-dir /cases/evidence_01 --operator \"analyst-01\"",
-      postCommandDelay: 500,
-      outputs: [
-        { text: "==> S0 Module 2: Advanced Forensic Evidence Carving & Reconstruction", delay: 400, cls: "term-orange" },
-        { text: "Target Media   : /dev/sdc (16.0 GiB, unallocated file system sectors)", delay: 320 },
-        { text: "Carving Modes  : Inode allocation table + MFT runlist + Shannon entropy evaluation", delay: 350 },
-        {
-          type: "progress",
-          operation: "s0 carve",
-          unit: "GiB",
-          total: 16.0,
-          speedUnit: "MB/s",
-          extraField: "Found",
-          stages: [
-            { pct: 0,   val: " 0.0", speed: "  0", extra: " 0", eta: "--", delay: 350 },
-            { pct: 22,  val: " 3.5", speed: "142", extra: " 3", eta: "3s", delay: 650 },
-            { pct: 48,  val: " 7.6", speed: "146", extra: " 7", eta: "2s", delay: 700 },
-            { pct: 74,  val: "11.8", speed: "149", extra: "11", eta: "1s", delay: 700 },
-            { pct: 92,  val: "14.7", speed: "147", extra: "14", eta: "1s", delay: 600 },
-            { pct: 100, val: "16.0", speed: "146", extra: "14", eta: "0s", delay: 550 }
-          ]
-        },
-        { text: "Bytes Scanned: 16.0 GiB | Total Files Recovered: 14", delay: 400, cls: "term-green" },
-        { text: "ID             EXT        SIZE    CONF  SHA256 (PREFIX)      FILENAME", delay: 300, cls: "term-dim" },
-        { text: "carve_01a9     pdf      428 KB     98%  a7f39b10c812d45e...  contract_signed.pdf", delay: 260, cls: "term-cyan" },
-        { text: "carve_02b4     png      1.8 MB     95%  51b4b4e7f4934b6b...  screen_capture.png", delay: 260, cls: "term-cyan" },
-        { text: "carve_03c8     docx      84 KB     91%  05dd581ce8e2041a...  financial_ledger.docx", delay: 260, cls: "term-cyan" },
-        { text: "[+] Recovery Manifest: carve_manifest_e21b8a90.json (Ed25519 Signed)", delay: 320, cls: "term-green" },
-        { text: "[+] Audit Ledger     : recorded block #1258 (SHA-256 Chained)", delay: 280, cls: "term-dim" }
+        { text: "[+] Audit Ledger: anchored block #1258 (51b4b4e7f493...)", delay: 320, cls: "term-dim" }
       ],
       pauseAfter: 2400
     },
