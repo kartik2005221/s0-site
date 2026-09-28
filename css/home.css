@@ -773,8 +773,8 @@ header.site-header {
 
 .terminal-body {
   padding: 20px 22px;
-  height: 390px;
-  max-height: 390px;
+  height: 420px;
+  max-height: 420px;
   overflow-y: auto;
   overflow-x: auto;
   font-size: 0.82rem;
